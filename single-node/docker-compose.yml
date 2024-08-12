@@ -16,7 +16,7 @@ services:
     ports:
       - "1514"
       - "1515"
-      - "514/udp"
+      - "514"
       - "55000"
     environment:
       INDEXER_URL: https://wazuh.indexer:9200
