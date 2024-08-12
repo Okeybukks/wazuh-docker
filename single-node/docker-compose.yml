@@ -44,8 +44,6 @@ services:
       - ./config/wazuh_indexer_ssl_certs/wazuh.manager.pem:/etc/ssl/filebeat.pem
       - ./config/wazuh_indexer_ssl_certs/wazuh.manager-key.pem:/etc/ssl/filebeat.key
       - ./config/wazuh_cluster/wazuh_manager.conf:/wazuh-config-mount/etc/ossec.conf
-    networks:
-        - coolify
 
   wazuh.indexer:
     image: wazuh/wazuh-indexer:4.8.1
@@ -98,8 +96,6 @@ services:
       - ./config/wazuh_indexer_ssl_certs/admin-key.pem:/usr/share/wazuh-indexer/certs/admin-key.pem
       #  if you need mount a custom opensearch.yml, uncomment the next line and delete the environment variables
       # - ./config/wazuh_indexer/wazuh.indexer.yml:/usr/share/wazuh-indexer/opensearch.yml
-    networks:
-        - coolify
 
   wazuh.dashboard:
     image: wazuh/wazuh-dashboard:4.8.1
@@ -146,8 +142,6 @@ services:
     links:
       - wazuh.indexer:wazuh.indexer
       - wazuh.manager:wazuh.manager
-    networks:
-        - coolify
 
 volumes:
   wazuh_api_configuration:
