@@ -144,17 +144,17 @@ services:
       - wazuh.manager:wazuh.manager
 
 volumes:
-  wazuh_api_configuration:
-  wazuh_etc:
-  wazuh_logs:
-  wazuh_queue:
-  wazuh_var_multigroups:
-  wazuh_integrations:
-  wazuh_active_response:
-  wazuh_agentless:
-  wazuh_wodles:
-  filebeat_etc:
-  filebeat_var:
-  wazuh-indexer-data:
-  wazuh-dashboard-config:
-  wazuh-dashboard-custom:
+  wazuh_api_configuration: null
+  wazuh_etc: null
+  wazuh_logs: null
+  wazuh_queue: null
+  wazuh_var_multigroups: null
+  wazuh_integrations: null
+  wazuh_active_response: null
+  wazuh_agentless: null
+  wazuh_wodles: null
+  filebeat_etc: null
+  filebeat_var: null
+  wazuh-indexer-data: null
+  wazuh-dashboard-config: null
+  wazuh-dashboard-custom: null
