@@ -59,7 +59,7 @@ services:
     ports:
       - "9200:9200"
     environment:
-      # JAVA_HOME: /usr/share/wazuh-indexer/jdk/
+      JAVA_HOME: /usr/share/wazuh-indexer/jdk/
       OPENSEARCH_JAVA_OPTS: "-Xms1g -Xmx1g"
       bootstrap.memory_lock: "true"
       NODE_NAME: "wazuh.indexer"
