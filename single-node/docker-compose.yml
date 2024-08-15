@@ -46,6 +46,27 @@ services:
       - ./config/wazuh_indexer_ssl_certs/wazuh.manager-key.pem:/etc/ssl/filebeat.key
       - ./config/wazuh_cluster/wazuh_manager.conf:/wazuh-config-mount/etc/ossec.conf
 
+  wazuh.indexer-init:
+    image: wazuh/wazuh-indexer:4.8.0
+    hostname: wazuh.indexer-init
+    volumes:
+      - ./config/wazuh_indexer_ssl_certs/root-ca.pem:/usr/share/wazuh-indexer/certs/root-ca.pem
+      - ./config/wazuh_indexer_ssl_certs/wazuh.indexer-key.pem:/usr/share/wazuh-indexer/certs/wazuh.indexer.key
+      - ./config/wazuh_indexer_ssl_certs/wazuh.indexer.pem:/usr/share/wazuh-indexer/certs/wazuh.indexer.pem
+      - ./config/wazuh_indexer_ssl_certs/admin.pem:/usr/share/wazuh-indexer/certs/admin.pem
+      - ./config/wazuh_indexer_ssl_certs/admin-key.pem:/usr/share/wazuh-indexer/certs/admin-key.pem
+      - wazuh-indexer-data:/var/lib/wazuh-indexer
+    entrypoint: >
+      /usr/share/wazuh-indexer/plugins/opensearch-security/tools/securityadmin.sh
+      -cd /usr/share/wazuh-indexer/plugins/opensearch-security/securityconfig/
+      -icl
+      -key /usr/share/wazuh-indexer/certs/admin-key.pem
+      -cert /usr/share/wazuh-indexer/certs/admin.pem
+      -cacert /usr/share/wazuh-indexer/certs/root-ca.pem
+      -nhnv
+    depends_on:
+      - wazuh.indexer
+
   wazuh.indexer:
     image: wazuh/wazuh-indexer:4.8.0
     hostname: wazuh.indexer
