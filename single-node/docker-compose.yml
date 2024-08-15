@@ -102,6 +102,8 @@ services:
     entrypoint: >
       bash -c "chmod +x /usr/share/wazuh-indexer/plugins/opensearch-security/tools/securityadmin.sh &&
       /usr/share/wazuh-indexer/plugins/opensearch-security/tools/securityadmin.sh
+      -h wazuh.indexer
+      -p 9200
       -cd /usr/share/wazuh-indexer/plugins/opensearch-security/securityconfig/
       -icl
       -key /usr/share/wazuh-indexer/certs/admin-key.pem
