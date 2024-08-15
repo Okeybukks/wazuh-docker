@@ -3,7 +3,7 @@ name: wazuh
 
 services:
   wazuh.manager:
-    image: wazuh/wazuh-manager:4.8.1
+    image: wazuh/wazuh-manager:4.8.0
     hostname: wazuh.manager
     restart: always
     container_name: manager
@@ -47,7 +47,7 @@ services:
       - ./config/wazuh_cluster/wazuh_manager.conf:/wazuh-config-mount/etc/ossec.conf
 
   wazuh.indexer:
-    image: wazuh/wazuh-indexer:4.8.1
+    image: wazuh/wazuh-indexer:4.8.0
     hostname: wazuh.indexer
     restart: always
     container_name: indexer
@@ -100,7 +100,7 @@ services:
       # - ./config/wazuh_indexer/wazuh.indexer.yml:/usr/share/wazuh-indexer/opensearch.yml
 
   wazuh.dashboard:
-    image: wazuh/wazuh-dashboard:4.8.1
+    image: wazuh/wazuh-dashboard:4.8.0
     hostname: wazuh.dashboard
     restart: always
     container_name: dashboard
