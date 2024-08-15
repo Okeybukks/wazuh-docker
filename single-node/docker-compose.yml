@@ -100,7 +100,8 @@ services:
       #  if you need mount a custom opensearch.yml, uncomment the next line and delete the environment variables
       # - ./config/wazuh_indexer/wazuh.indexer.yml:/usr/share/wazuh-indexer/opensearch.yml
     entrypoint: >
-      bash -c "chmod +x /usr/share/wazuh-indexer/plugins/opensearch-security/tools/securityadmin.sh --start-cluster &&
+      bash -c "chmod +x /usr/share/wazuh-indexer/plugins/opensearch-security/tools/securityadmin.sh
+      && /usr/share/wazuh-indexer/plugins/opensearch-security/tools/securityadmin.sh --start-cluster &&
       /docker-entrypoint.sh"
 
   wazuh.dashboard:
