@@ -97,16 +97,14 @@ services:
       - ./config/wazuh_indexer_ssl_certs/wazuh.indexer.pem:/usr/share/wazuh-indexer/certs/wazuh.indexer.pem
       - ./config/wazuh_indexer_ssl_certs/admin.pem:/usr/share/wazuh-indexer/certs/admin.pem
       - ./config/wazuh_indexer_ssl_certs/admin-key.pem:/usr/share/wazuh-indexer/certs/admin-key.pem
-      - ./config/wazuh_indexer_ssl_certs/securityadmin.sh:/usr/share/wazuh-indexer/certs/securityadmin.sh
+      # - ./config/wazuh_indexer_ssl_certs/securityadmin.sh:/usr/share/wazuh-indexer/certs/securityadmin.sh
       #  if you need mount a custom opensearch.yml, uncomment the next line and delete the environment variables
       # - ./config/wazuh_indexer/wazuh.indexer.yml:/usr/share/wazuh-indexer/opensearch.yml
-    # command: >
-    #   /bin/bash -c "/usr/share/wazuh-indexer/certs/securityadmin.sh -h wazuh.indexer -p 9200
-    #   -cd /usr/share/wazuh-indexer/plugins/opensearch-security/securityconfig/ 
-    #   -key /usr/share/wazuh-indexer/certs/admin-key.pem 
-    #   -cert /usr/share/wazuh-indexer/certs/admin.pem 
-    #   -cacert /usr/share/wazuh-indexer/certs/root-ca.pem 
-    #   -nhnv"
+    command: >
+      /bin/sh -c "/usr/share/wazuh-indexer/plugins/opensearch-security/tools/securityadmin.sh -h wazuh.indexer -p 9200
+      -key /usr/share/wazuh-indexer/certs/admin-key.pem 
+      -cert /usr/share/wazuh-indexer/certs/admin.pem 
+      -cacert /usr/share/wazuh-indexer/certs/root-ca.pem"
 
     # entrypoint: >
     #   bash -c "chmod +x /usr/share/wazuh-indexer/plugins/opensearch-security/tools/securityadmin.sh &&
