@@ -3,7 +3,7 @@ name: wazuh
 
 services:
   wazuh.manager:
-    image: wazuh/wazuh-manager:4.8.0
+    image: wazuh/wazuh-manager:4.8.1
     hostname: wazuh.manager
     restart: always
     container_name: manager
@@ -47,7 +47,7 @@ services:
       - ./config/wazuh_cluster/wazuh_manager.conf:/wazuh-config-mount/etc/ossec.conf
 
   wazuh.indexer:
-    image: wazuh/wazuh-indexer:4.8.0
+    image: wazuh/wazuh-indexer:4.8.1
     hostname: wazuh.indexer
     # restart: always
     container_name: indexer
@@ -100,6 +100,15 @@ services:
       - ./config/wazuh_indexer_ssl_certs/securityadmin.sh:/usr/share/wazuh-indexer/certs/securityadmin.sh
       #  if you need mount a custom opensearch.yml, uncomment the next line and delete the environment variables
       # - ./config/wazuh_indexer/wazuh.indexer.yml:/usr/share/wazuh-indexer/opensearch.yml
+    command: >
+      /bin/bash -c "/usr/share/wazuh-indexer/certs/securityadmin.sh -h wazuh.indexer -p 9200
+      -cd /usr/share/wazuh-indexer/plugins/opensearch-security/securityconfig/ 
+      -key /usr/share/wazuh-indexer/certs/admin-key.pem 
+      -cert /usr/share/wazuh-indexer/certs/admin.pem 
+      -cacert /usr/share/wazuh-indexer/certs/root-ca.pem 
+      -nhnv &&
+      /usr/share/wazuh-indexer/bin/opensearch"
+
     # entrypoint: >
     #   bash -c "chmod +x /usr/share/wazuh-indexer/plugins/opensearch-security/tools/securityadmin.sh &&
     #   /usr/share/wazuh-indexer/plugins/opensearch-security/tools/securityadmin.sh
@@ -114,7 +123,7 @@ services:
     #   /docker-entrypoint.sh"
 
   wazuh.dashboard:
-    image: wazuh/wazuh-dashboard:4.8.0
+    image: wazuh/wazuh-dashboard:4.8.1
     hostname: wazuh.dashboard
     restart: always
     container_name: dashboard
@@ -164,86 +173,16 @@ services:
 
 volumes:
   wazuh_api_configuration:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./config/manager/wazuh_api_configuration
-      o: bind
   wazuh_etc:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./config/manager/wazuh_etc
-      o: bind
   wazuh_logs:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./config/manager/wazuh_logs
-      o: bind
   wazuh_queue:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./config/manager/wazuh_queue
-      o: bind
   wazuh_var_multigroups:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./config/manager/wazuh_var_multigroups
-      o: bind
   wazuh_integrations:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./config/manager/wazuh_integrations
-      o: bind
   wazuh_active_response:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./config/manager/wazuh_active_response
-      o: bind
   wazuh_agentless:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./config/manager/wazuh_agentless
-      o: bind
   wazuh_wodles:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./config/manager/wazuh_wodles
-      o: bind
   filebeat_etc:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./config/manager/filebeat_etc
-      o: bind
   filebeat_var:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./config/manager/filebeat_var
-      o: bind
   wazuh-indexer-data:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./config/indexer/wazuh-indexer-data
-      o: bind
   wazuh-dashboard-config:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./config/dashboard/wazuh-dashboard-config
-      o: bind
   wazuh-dashboard-custom:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./config/dashboard/wazuh-dashboard-custom
-      o: bind
