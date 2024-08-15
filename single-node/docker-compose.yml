@@ -106,8 +106,7 @@ services:
       -key /usr/share/wazuh-indexer/certs/admin-key.pem 
       -cert /usr/share/wazuh-indexer/certs/admin.pem 
       -cacert /usr/share/wazuh-indexer/certs/root-ca.pem 
-      -nhnv &&
-      /usr/share/wazuh-indexer/bin/opensearch"
+      -nhnv"
 
     # entrypoint: >
     #   bash -c "chmod +x /usr/share/wazuh-indexer/plugins/opensearch-security/tools/securityadmin.sh &&
