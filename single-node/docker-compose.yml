@@ -97,7 +97,7 @@ services:
       - ./config/wazuh_indexer_ssl_certs/wazuh.indexer.pem:/usr/share/wazuh-indexer/certs/wazuh.indexer.pem
       - ./config/wazuh_indexer_ssl_certs/admin.pem:/usr/share/wazuh-indexer/certs/admin.pem
       - ./config/wazuh_indexer_ssl_certs/admin-key.pem:/usr/share/wazuh-indexer/certs/admin-key.pem
-      - ./config/securityadmin.sh:/usr/share/wazuh-indexer/securityadmin.sh
+      - ./config/securityadmin.sh:/usr/share/wazuh-indexer/certs/securityadmin.sh
       #  if you need mount a custom opensearch.yml, uncomment the next line and delete the environment variables
       # - ./config/wazuh_indexer/wazuh.indexer.yml:/usr/share/wazuh-indexer/opensearch.yml
     # entrypoint: >
