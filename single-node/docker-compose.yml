@@ -101,7 +101,7 @@ services:
       # - ./config/wazuh_indexer/wazuh.indexer.yml:/usr/share/wazuh-indexer/opensearch.yml
     entrypoint: >
       bash -c "chmod +x /usr/share/wazuh-indexer/plugins/opensearch-security/tools/securityadmin.sh
-      && /usr/share/wazuh-indexer/plugins/opensearch-security/tools/securityadmin.sh --start-cluster &&
+      && /usr/share/wazuh-indexer/plugins/opensearch-security/tools/securityadmin.sh &&
       /docker-entrypoint.sh"
 
   wazuh.dashboard:
