@@ -1,11 +1,12 @@
 # Wazuh App Copyright (C) 2017, Wazuh Inc. (License GPLv2)
-version: '3.7'
+name: wazuh
 
 services:
   wazuh.manager:
     image: wazuh/wazuh-manager:4.8.1
     hostname: wazuh.manager
     restart: always
+    container_name: manager
     ulimits:
       memlock:
         soft: -1
@@ -49,6 +50,7 @@ services:
     image: wazuh/wazuh-indexer:4.8.1
     hostname: wazuh.indexer
     restart: always
+    container_name: indexer
     ulimits:
       memlock:
         soft: -1
@@ -101,6 +103,7 @@ services:
     image: wazuh/wazuh-dashboard:4.8.1
     hostname: wazuh.dashboard
     restart: always
+    container_name: dashboard
     ulimits:
       memlock:
         soft: -1
@@ -138,23 +141,95 @@ services:
       #  if you need mount a custom opensearch-dashboards.yml, uncomment the next line and delete the environment variables
       # - ./config/wazuh_dashboard/opensearch_dashboards.yml:/wazuh-config-mount/config/opensearch_dashboards.yml
     depends_on:
-      - wazuh.indexer
+      wazuh.indexer:
+        condition: service_started
+      
     links:
       - wazuh.indexer:wazuh.indexer
       - wazuh.manager:wazuh.manager
 
 volumes:
-  wazuh_api_configuration: null
-  wazuh_etc: null
-  wazuh_logs: null
-  wazuh_queue: null
-  wazuh_var_multigroups: null
-  wazuh_integrations: null
-  wazuh_active_response: null
-  wazuh_agentless: null
-  wazuh_wodles: null
-  filebeat_etc: null
-  filebeat_var: null
-  wazuh-indexer-data: null
-  wazuh-dashboard-config: null
-  wazuh-dashboard-custom: null
+  wazuh_api_configuration:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./config/manager/wazuh_api_configuration
+      o: bind
+  wazuh_etc:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./config/manager/wazuh_etc
+      o: bind
+  wazuh_logs:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./config/manager/wazuh_logs
+      o: bind
+  wazuh_queue:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./config/manager/wazuh_queue
+      o: bind
+  wazuh_var_multigroups:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./config/manager/wazuh_var_multigroups
+      o: bind
+  wazuh_integrations:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./config/manager/wazuh_integrations
+      o: bind
+  wazuh_active_response:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./config/manager/wazuh_active_response
+      o: bind
+  wazuh_agentless:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./config/manager/wazuh_agentless
+      o: bind
+  wazuh_wodles:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./config/manager/wazuh_wodles
+      o: bind
+  filebeat_etc:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./config/manager/filebeat_etc
+      o: bind
+  filebeat_var:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./config/manager/filebeat_var
+      o: bind
+  wazuh-indexer-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./config/indexer/wazuh-indexer-data
+      o: bind
+  wazuh-dashboard-config:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./config/dashboard/wazuh-dashboard-config
+      o: bind
+  wazuh-dashboard-custom:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./config/dashboard/wazuh-dashboard-custom
+      o: bind
